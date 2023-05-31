@@ -68,3 +68,18 @@ B1pah = 6.134e-7
 B2pah = 3.113e-10
 Vpah1 = 3.0e-28*u.cm**3 #cm^3/H, volume of dust
 Vpah2 = 0.7e-28*u.cm**3 #cm^3/H, volume of dust
+
+# Hensley & Draine (2023) astrodust + PAH
+# constants
+B1 = 7.52e-7 #1/H
+B2 = 8.09e-10 #1/H
+BAd = 3.31e-10 #1/H
+a0Ad = 63.8e-8 * u.cm #cm
+sigAd = 0.353
+A0 = 2.97e-5 #1/H
+Ai = [-3.40, -0.807, 0.157, 7.96e-3, -1.68e-3]
+A1 = -3.40
+A2 = -0.807
+A3 = 0.157
+A4 = 7.96e-3
+A5 = -1.68e-3

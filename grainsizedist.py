@@ -1,5 +1,5 @@
 """
-Functions needed to recreate grain size distribution functions from Weingartner & Draine (2001); ApJ 548,296 and Draine et al. (2021); ApJ 917,3
+Functions needed to recreate grain size distribution functions from Weingartner & Draine (2001)[ApJ 548,296], Draine et al. (2021)[ApJ 917,3] and Hensley & Draine (2023)[ApJ 948,55]
 """
 
 # __all__ = []
@@ -248,3 +248,94 @@ def Dist_pah(a):
     da2 = (c.B2pah/a)*np.exp(-0.5*(np.log(a/c.a02pah)/c.sig)**2)
     # add terms and return
     return da1+da2
+
+
+# PAH distribution from Hensley & Draine (2023)
+def PAH(a):
+    """
+    Calculate the PAH distribution from Hensley & Draine (2023), Eq. 17.
+
+    
+    Inputs:
+    -----
+    a: float
+    Value of the grain size, in cm. 
+    
+    NOTE: Constants aminPAH, B1, B2, a01pah, a02pah, and sig are set in separate file, dustconst.py
+
+
+    Outputs:
+    -----
+    dist1+dist2: float
+    Value of the summation from the size distribution equation, value of the number of grains for the given size (1/cm).
+    """
+
+    # equation is only valid for sizes > aminPAH
+    if a.value < c.aminPAH:
+        return 0
+    # for valid sizes, calculate the value of Eq. 17 for j=1 and j=2
+    else:
+        dist1 = (c.B1/a)*np.exp(-0.5*(np.log(a/c.a01pah)/c.sig)**2)
+        dist2 = (c.B2/a)*np.exp(-0.5*(np.log(a/c.a02pah)/c.sig)**2)
+        
+        # combine for value of summation and return
+        return dist1+dist2
+
+
+# ionization fraction of PAHs from Hensley & Draine (2023)
+def fion(a):
+    """
+    Calculate the ionized fraction of PAHs (Eq. 19, Hensley & Draine 2023).
+
+    
+    Inputs:
+    -----
+    a: float
+    Value of the grain size, in cm.
+
+
+    Outputs:
+    -----
+    f: float
+    Fraction of ionized PAHs for the given grain size.
+    """
+    
+    # Eq. 19
+    f = 1 - (1 / (1 + (a/(10e-8*u.cm))))
+    return f
+
+
+# astrodust distribution from Hensley & Draine (2023)
+def astrodust(a):
+    """
+    Calculate the astrodust size distribution from Hensley & Draine (2023), Eq. 24.
+
+    
+    Inputs:
+    -----
+    a: float
+    Value of the grain size, in cm.
+
+    NOTE: Constants A0-A5, BAd, a0Ad, and sigAd are set in separate file, dustconst.py.
+    Ai = [A1, A2, A3, A4, A5]
+
+
+    Outputs:
+    -----
+    dist1+dist2: float
+    Addition of the two terms of Eq. 24, value of the number of grains for the given size.
+    """
+
+    # initialize for summation in exp
+    expsum = 0
+    # sum over i = 1 to 5
+    for idx in range(0,5):
+        x = c.Ai[idx]*(np.log(a.value)**(idx+1))
+        expsum += x
+
+    # calculate each term
+    dist1 = (c.A0/a) * np.exp(expsum)
+    dist2 = (c.BAd/a) * np.exp(-0.5*(np.log(a/c.a0Ad)/c.sigAd)**2)
+    
+    # add the terms and return
+    return dist1+dist2
