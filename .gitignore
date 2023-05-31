@@ -156,4 +156,4 @@ dmypy.json
 .pyre/
 
 # Matplotlib
-.mplstyle
+*.mplstyle
