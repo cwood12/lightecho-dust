@@ -1,0 +1,17 @@
+xtick.direction : in
+ytick.direction : in
+xtick.major.top : True
+ytick.minor.right : True
+ytick.right : True
+xtick.top : True
+axes.linewidth : 2
+xtick.major.width : 2
+ytick.major.width : 2
+xtick.minor.width : 1
+ytick.minor.width : 1
+xtick.major.size : 6
+ytick.major.size : 6
+axes.titlesize : 18
+axes.labelsize : 15
+xtick.labelsize : 12
+ytick.labelsize: 12
