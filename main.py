@@ -36,9 +36,9 @@ import hstfilters as hst
 
 
 # pull out available wavelengths for Qsc values, convert to cm from um, and take the log
-logwaveq = np.log10(1e-4*np.loadtxt('dustmodels/DH21_wave.dat')) #log(cm)
+logwaveq = np.log10(1e-4*np.loadtxt('dustmodels_DH21/DH21_wave.dat')) #log(cm)
 # pull out available sizes for Qsc values, convert to cm from um, and take the log
-logsizeq = np.log10(1e-4*np.loadtxt('dustmodels/DH21_aeff.dat')) #log(cm)
+logsizeq = np.log10(1e-4*np.loadtxt('dustmodels_DH21/DH21_aeff.dat')) #log(cm)
 
 
 # "For astrodust we assume a porosity P = 0.20" - Draine et al. (2021)
@@ -50,23 +50,23 @@ logsizeq = np.log10(1e-4*np.loadtxt('dustmodels/DH21_aeff.dat')) #log(cm)
 
 # model #1 - poro = 0.2, Fe = 0.0, b/a = 0.5
 # Qsc values split by orientation
-file1 = 'dustmodels/q_DH21Ad_P0.20_Fe0.00_0.500.dat'
+file1 = 'dustmodels_DH21/q_DH21Ad_P0.20_Fe0.00_0.500.dat'
 model1 = np.loadtxt(file1)
 model1_jori1, model1_jori2, model1_jori3 = id.jori(model1)
 
 
 # older models used for g (degree of forward scattering) values
 # carbonaceous dust
-carbong = 'dustmodels/Gra_81.dat'
+carbong = 'dustmodels_WD01/Gra_81.dat'
 gcarb = np.loadtxt(carbong, usecols=(3), unpack=True)
 # silicate dust
-silicong = 'dustmodels/suvSil_81.dat'
+silicong = 'dustmodels_WD01/suvSil_81.dat'
 gsil = np.loadtxt(silicong, usecols=(3), unpack=True)
 
 # pull out available wavelengths for g values, convert to cm from um, and take the log
-logwaveg = np.log10(1e-4*np.loadtxt('dustmodels/LD93_wave.dat', unpack=True)) #log(cm)
+logwaveg = np.log10(1e-4*np.loadtxt('dustmodels_WD01/LD93_wave.dat', unpack=True)) #log(cm)
 # pull out available sizes for the g values, convert to cm from um, and take the log
-logsizeg = np.log10(1e-4*np.loadtxt('dustmodels/LD93_aeff.dat', unpack=True)) #log(cm)
+logsizeg = np.log10(1e-4*np.loadtxt('dustmodels_WD01/LD93_aeff.dat', unpack=True)) #log(cm)
 
 
 #----------
