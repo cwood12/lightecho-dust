@@ -16,7 +16,7 @@ import astropy.units as u
 
 import dustconst as c
 import grainsizedist as gsd
-import interp_dust as id
+import interpdust as id
 
 
 # extract g(lambda, a) value from table 
