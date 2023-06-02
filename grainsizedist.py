@@ -271,8 +271,8 @@ def PAH(a):
     """
 
     # equation is only valid for sizes > aminPAH
-    if a.value < c.aminPAH:
-        return 0
+    if a < c.aminPAH:
+        return 0/u.cm
     # for valid sizes, calculate the value of Eq. 17 for j=1 and j=2
     else:
         dist1 = (c.B1/a)*np.exp(-0.5*(np.log(a/c.a01pah)/c.sig)**2)
@@ -326,16 +326,20 @@ def astrodust(a):
     Addition of the two terms of Eq. 24, value of the number of grains for the given size.
     """
 
-    # initialize for summation in exp
-    expsum = 0
-    # sum over i = 1 to 5
-    for idx in range(0,5):
-        x = c.Ai[idx]*(np.log(a.value)**(idx+1))
-        expsum += x
-
-    # calculate each term
-    dist1 = (c.A0/a) * np.exp(expsum)
-    dist2 = (c.BAd/a) * np.exp(-0.5*(np.log(a/c.a0Ad)/c.sigAd)**2)
+    if a < c.aminAd23 or a > c.amaxAd23:
+        return 0/u.cm
     
-    # add the terms and return
-    return dist1+dist2
+    else:
+        # initialize for summation in exp
+        expsum = 0
+        # sum over i = 1 to 5
+        for idx in range(0,5):
+            x = c.Ai[idx]*(np.log(a/(1e-8*u.cm))**(idx+1))
+            expsum += x
+
+        # calculate each term
+        dist1 = (c.A0/a) * np.exp(expsum)
+        dist2 = (c.BAd/a) * np.exp(-0.5*(np.log(a/c.a0Ad)/c.sigAd)**2)
+    
+        # add the terms and return
+        return dist1+dist2
